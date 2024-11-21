@@ -4,24 +4,76 @@ import Duas from "@/components/Duas";
 import Categories from "@/components/Categories";
 import { useEffect, useState } from "react";
 import { flushSync } from "react-dom";
-import duas from "@/components/api/dua.json";
-import categories from "@/components/api/category.json";
-import subCat from "@/components/api/sub-category.json";
+// import duas from "@/components/api/dua.json";
+// import categories from "@/components/api/category.json";
+// import subCat from "@/components/api/sub-category.json";
 import Settings from "@/components/Settings";
 import { useFetcher } from "@/components/lib/useFetcher";
+import { useRouter } from "next/navigation";
 
-export default function Home() {
+export default function Home({ searchParams }) {
+  const [filteredCategories, setFilteredCategories] = useState([]);
   const [filteredSubCat, setFilteredSubCat] = useState([]);
+  const [duas, setDuas] = useState([]);
   const [openCategory, setOpenCategory] = useState(null);
-  const [openDua, setOpenDua] = useState(null);
-  const [filteredDua, setFilteredDua] = useState([]);
   const [isCopied, setIsCopied] = useState(false);
   const [duaList, setDuaList] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredCategories, setFilteredCategories] = useState([]);
+  const router = useRouter();
+  const catId = searchParams?.cat;
+  const subCatId = searchParams?.subcat;
+  const duaId = searchParams?.dua;
 
-  const { data: dataFromApi } = useFetcher("/api/categories");
-  console.log(dataFromApi);
+  // // Category routes
+  // router.get("/categories", categoryController.getCategories);
+  // router.get("/categories/:id", categoryController.getCategory);
+
+  // // Subcategory routes
+  // router.get(
+  //   "/categories/:catId/subcategories",
+  //   subCategoryController.getSubcategoriesByCategory
+  // );
+  // router.get("/subcategories", subCategoryController.getSubcategories);
+
+  // // Dua routes
+  // router.get("/duas", duaController.getAllDua);
+  // router.get("/duas/:duaId", duaController.getDuaById);
+  // router.get(
+  //   "/subcategories/:subcatId/duas",
+  //   duaController.getDuasBySubcategoryId
+  // );
+  // router.get("/categories/:catId/duas", duaController.getDuasByCategoryId);
+
+  const { data: categories } = useFetcher("/categories");
+  const { data: duasBySubCat } = useFetcher(
+    subCatId && `/subcategories/${subCatId}/duas`
+  );
+  const { data: duasbyCat } = useFetcher(catId && `/categories/${catId}/duas`);
+  const { data: subCat } = useFetcher(
+    subCatId && `/categories/${subCatId}/subcategories`
+  );
+
+  useEffect(() => {
+    if (!catId) {
+      router.push("?duas-importance&cat=1");
+    }
+  }, [router]);
+
+  useEffect(() => {
+    setFilteredCategories(categories);
+  }, [categories]);
+
+  useEffect(() => {
+    setFilteredSubCat(subCat);
+  }, [subCat]);
+
+  useEffect(() => {
+    setDuas(duasbyCat);
+  }, [duasbyCat, catId]);
+
+  useEffect(() => {
+    setDuas(duasBySubCat);
+  }, [duasBySubCat, subCatId]);
 
   const handleCopy = () => {
     setIsCopied(true);
@@ -29,52 +81,6 @@ export default function Home() {
     setTimeout(() => {
       setIsCopied(false);
     }, 2000);
-  };
-
-  const isCategoryOpen = (categoryId) => {
-    return openCategory === categoryId;
-  };
-
-  // Get Functions
-  const getFilteredDua = (cat_id) => {
-    flushSync(() => setFilteredDua([]));
-
-    flushSync(() =>
-      setFilteredDua(() => {
-        return duas.filter((dua) => dua.cat_id === cat_id);
-      })
-    );
-
-    if (openCategory === cat_id) {
-      setOpenCategory(null);
-    } else {
-      setOpenCategory(cat_id);
-    }
-    flushSync(() =>
-      setFilteredSubCat(() => {
-        return subCat.filter((sc) => sc.cat_id === cat_id);
-      })
-    );
-  };
-
-  const getFilteredSubCat = (SubCatId) => {
-    flushSync(() => setFilteredDua([]));
-
-    flushSync(() =>
-      setDuaList(() => {
-        return duas.filter((dua) => dua.subcat_id === SubCatId);
-      })
-    );
-    setOpenDua(!openDua);
-  };
-
-  const getFilteredDuaByName = (duaId) => {
-    flushSync(() => setFilteredDua([]));
-    flushSync(() =>
-      setFilteredDua(() => {
-        return duas.filter((dua) => dua.id === duaId);
-      })
-    );
   };
 
   // Search Query
@@ -93,15 +99,12 @@ export default function Home() {
     <>
       <div className="flex lg:flex-row flex-col gap-4">
         <Categories
+          activeCategory={catId}
+          activeDua={duaId}
+          activeSubCategory={subCatId}
           filteredSubCat={filteredSubCat}
-          getFilteredDua={getFilteredDua}
           categories={categories}
-          isCategoryOpen={isCategoryOpen}
-          getFilteredSubCat={getFilteredSubCat}
-          filteredDua={filteredDua}
-          openDua={openDua}
-          duaList={duaList}
-          getFilteredDuaByName={getFilteredDuaByName}
+          duaList={duas}
           searchQuery={searchQuery}
           handleSearch={handleSearch}
           filteredCategories={filteredCategories}
@@ -109,8 +112,6 @@ export default function Home() {
 
         <Duas
           duas={duas}
-          filteredSubCat={filteredSubCat}
-          filteredDua={filteredDua}
           isCopied={isCopied}
           handleCopy={handleCopy}
           openCategory={openCategory}

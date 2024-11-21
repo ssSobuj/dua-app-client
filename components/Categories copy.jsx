@@ -5,10 +5,13 @@ import { IoSearchSharp } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 
 export default function Categories({
-  activeCategory,
-  activeSubCategory,
-  activeDua,
+  categories,
+  getFilteredDua,
   filteredSubCat,
+  isCategoryOpen,
+  getFilteredSubCat,
+  filteredDua,
+  getFilteredDuaByName,
   duaList,
   searchQuery,
   handleSearch,
@@ -17,6 +20,7 @@ export default function Categories({
   const [openSubCatId, setOpenSubCatId] = useState(null);
   const router = useRouter();
   const handleCategoryClick = (category) => {
+    getFilteredDua(category.cat_id);
     const name = category.cat_name_en
       .replace(/\s+/g, "-")
       .toLowerCase()
@@ -26,6 +30,7 @@ export default function Categories({
 
   // Handle subcategory click
   const handleSubCategoryClick = (subCategory, category) => {
+    getFilteredSubCat(subCategory.subcat_id); // Fetch data based on subcategory
     const name = category.cat_name_en
       .replace(/\s+/g, "-")
       .toLowerCase()
@@ -35,6 +40,7 @@ export default function Categories({
 
   // Handle dua click
   const handleDuaClick = (subCategory, category, duaId) => {
+    getFilteredDuaByName(duaId);
     const name = category.cat_name_en
       .replace(/\s+/g, "-")
       .toLowerCase()
@@ -90,7 +96,7 @@ export default function Categories({
                 <p className="text-sm font-normal text-[#7E7E7E]">Duas</p>
               </div>
             </div>
-            {activeCategory == category?.id && (
+            {isCategoryOpen(category?.cat_id) && (
               <div>
                 <ul className="green-list">
                   {filteredSubCat?.map((singleSubCat) => (
@@ -105,17 +111,24 @@ export default function Categories({
                             : "cursor-pointer"
                         }`}
                         onClick={() => {
+                          if (openSubCatId === singleSubCat.subcat_id) {
+                            setOpenSubCatId(null);
+                          } else {
+                            setOpenSubCatId(singleSubCat.subcat_id);
+                          }
                           handleSubCategoryClick(singleSubCat, category);
                         }}
                       >
                         {singleSubCat.subcat_name_en}
                       </div>
-                      {activeSubCategory == singleSubCat?.subcat_id && (
+                      {/* Dua name under sub categories */}
+                      {openSubCatId === singleSubCat?.subcat_id && (
                         <ul className="pt-2">
                           {duaList?.map((dua) => (
                             <li
                               className={`cursor-pointer text-sm py-2 ${
-                                activeDua == dua.id
+                                filteredDua.length === 1 &&
+                                filteredDua[0].id === dua.id
                                   ? "text-[#1FA45B] font-semibold"
                                   : "cursor-pointer"
                               }`}
