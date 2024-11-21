@@ -8,6 +8,7 @@ import duas from "@/components/api/dua.json";
 import categories from "@/components/api/category.json";
 import subCat from "@/components/api/sub-category.json";
 import Settings from "@/components/Settings";
+import { useFetcher } from "@/components/lib/useFetcher";
 
 export default function Home() {
   const [filteredSubCat, setFilteredSubCat] = useState([]);
@@ -18,6 +19,9 @@ export default function Home() {
   const [duaList, setDuaList] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredCategories, setFilteredCategories] = useState([]);
+
+  const { data: dataFromApi } = useFetcher("/api/categories");
+  console.log(dataFromApi);
 
   const handleCopy = () => {
     setIsCopied(true);
