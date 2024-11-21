@@ -7,6 +7,7 @@ import { flushSync } from "react-dom";
 import duas from "@/components/api/dua.json";
 import categories from "@/components/api/category.json";
 import subCat from "@/components/api/sub-category.json";
+import Settings from "@/components/Settings";
 
 export default function Home() {
   const [filteredSubCat, setFilteredSubCat] = useState([]);
@@ -86,7 +87,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex lg:flex-row flex-col gap-2">
+      <div className="flex lg:flex-row flex-col gap-4">
         <Categories
           filteredSubCat={filteredSubCat}
           getFilteredDua={getFilteredDua}
@@ -110,6 +111,7 @@ export default function Home() {
           handleCopy={handleCopy}
           openCategory={openCategory}
         />
+        <Settings />
       </div>
     </>
   );

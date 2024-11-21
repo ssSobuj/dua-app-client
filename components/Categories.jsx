@@ -19,17 +19,18 @@ export default function Categories({
   const [openSubCatId, setOpenSubCatId] = useState(null);
 
   return (
-    <div className="bg-white w-[19rem] lg:w-80 ml-3 pt-0 rounded-2xl overflow-auto h-[35rem] lg:h-[35.5rem]">
-      <p className="bg-[#1FA45B] text-white text-center font-semibold p-3 text-m rounded-t-lg sticky sm:h-16 top-0 w-76 z-10">
+    <div className="bg-white w-1/4 ml-3 pt-0 rounded-2xl overflow-auto scrollbar-thin h-[90vh] ">
+      <p className="bg-[#1FA45B] text-white text-center font-normal px-3 py-4 text-m rounded-t-lg sticky top-0 w-76 z-10">
         Categories
       </p>
-      <div>
+
+      <div className="w-full">
         <input
           type="text"
           placeholder={`Search Categories`}
           value={searchQuery}
           onChange={handleSearch}
-          className="border border-gray-300 rounded-md py-2 px-3 pl-9 w-[17rem] outline-[#1FA45B] mt-4 mx-4"
+          className="border border-gray-300 rounded-md py-2 px-3 pl-9 w-[90%] outline-[#1FA45B] mt-4 mx-4"
         />
         <IoSearchSharp className="text-2xl text-gray-400 relative bottom-[34px] left-6" />
       </div>
@@ -52,7 +53,7 @@ export default function Categories({
                   className="p-2 rounded-lg bg-[#E8F0F5]"
                 />
                 <div>
-                  <h3 className="font-semibold text-base w-40 text-[#1FA45B]">
+                  <h3 className="font-semibold text-base w-40">
                     {category.cat_name_en}
                   </h3>
                   <p className="text-sm font-normal text-[#7E7E7E]">
@@ -138,7 +139,7 @@ export default function Categories({
                     className="p-2 rounded-lg bg-[#E8F0F5]"
                   />
                   <div>
-                    <h3 className="font-semibold text-base w-40 text-[#1FA45B]">
+                    <h3 className="font-semibold text-base w-40">
                       {category.cat_name_en}
                     </h3>
                     <p className="text-sm font-normal text-[#7E7E7E]">

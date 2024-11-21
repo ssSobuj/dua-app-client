@@ -13,7 +13,7 @@ export default function Duas({
   filteredSubCat,
 }) {
   return (
-    <div className="mx-2 w-[23rem] relative lg:right-0 right-14 m-3 lg:m-0 lg:top-0  lg:w-[38rem] lg:overflow-auto lg:h-[52.8rem] text-[#393939]">
+    <div className="mx-2 w-3/4 relative lg:right-0 right-14 m-3 lg:m-0 lg:top-0 lg:overflow-auto scrollbar-thin lg:h-[52.8rem] text-[#393939]">
       <ul>
         {filteredDua?.map((dua) => (
           <li className="mb-4 bg-white p-5 rounded-2xl mr-0 width" key={dua.id}>
@@ -49,7 +49,7 @@ export default function Duas({
             </p>
 
             {/* Dua Audio */}
-            <div>{dua.audio && <Audio audio={dua.audio} />}</div>
+            {dua.audio && <Audio audio={dua.audio} />}
 
             {/* Icons */}
             <div className="flex justify-end text-xl text-gray-400 gap-4 mt-3">
