@@ -2,7 +2,7 @@ import NavAside from "@/components/layouts/NavAside";
 import NavTop from "@/components/layouts/NavTop";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import Settings from "@/components/Settings";
+import ReduxProvider from "@/redux/Provider";
 
 export const metadata = {
   title: "Dua & Ruqyah",
@@ -19,21 +19,23 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable}`}>
       <head></head>
-      <body className="bg-gray-200 h-screen">
-        <div className="flex h-full p-[24px] pb-0 gap-4">
-          {/* Sidebar with scroll */}
-          <NavAside className="w-64 h-full overflow-y-auto bg-white shadow-lg" />
+      <ReduxProvider>
+        <body className="bg-gray-200 h-screen">
+          <div className="flex h-full p-[24px] pb-0 gap-4">
+            {/* Sidebar with scroll */}
+            <NavAside className="w-64 h-full overflow-y-auto bg-white shadow-lg" />
 
-          {/* Main content */}
-          <div className="flex-1 flex flex-col">
-            {/* Top navigation bar */}
-            <NavTop className="bg-white shadow p-4" />
+            {/* Main content */}
+            <div className="flex-1 flex flex-col">
+              {/* Top navigation bar */}
+              <NavTop className="bg-white shadow p-4" />
 
-            {/* Main content area */}
-            <div className="flex-1">{children}</div>
+              {/* Main content area */}
+              <div className="flex-1">{children}</div>
+            </div>
           </div>
-        </div>
-      </body>
+        </body>
+      </ReduxProvider>
     </html>
   );
 }

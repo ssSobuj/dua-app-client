@@ -1,3 +1,5 @@
+"use client";
+
 import { IoBulbOutline, IoShareSocialOutline } from "react-icons/io5";
 import { LuBookmark, LuCopy } from "react-icons/lu";
 import { BsExclamationOctagon } from "react-icons/bs";

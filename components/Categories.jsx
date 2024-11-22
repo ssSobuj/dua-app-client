@@ -3,6 +3,10 @@ import Image from "next/image";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoSearchSharp } from "react-icons/io5";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { setCategoryId } from "@/redux/features/categorySlice";
+import { setSubcategoryId } from "@/redux/features/subcategorySlice";
+import { setDuaId } from "@/redux/features/duaSlice";
 
 export default function Categories({
   activeCategory,
@@ -14,9 +18,14 @@ export default function Categories({
   handleSearch,
   filteredCategories,
 }) {
-  const [openSubCatId, setOpenSubCatId] = useState(null);
+  const dispatch = useDispatch();
+  const catId = useSelector((state) => state.category.cat_id);
+  const subCatId = useSelector((state) => state.subcategory.subcat_id);
+  const duaId = useSelector((state) => state.dua.dua_id);
+
   const router = useRouter();
   const handleCategoryClick = (category) => {
+    dispatch(setCategoryId(category?.cat_id));
     const name = category.cat_name_en
       .replace(/\s+/g, "-")
       .toLowerCase()
@@ -26,6 +35,7 @@ export default function Categories({
 
   // Handle subcategory click
   const handleSubCategoryClick = (subCategory, category) => {
+    dispatch(setSubcategoryId(subCategory?.subcat_id));
     const name = category.cat_name_en
       .replace(/\s+/g, "-")
       .toLowerCase()
@@ -35,6 +45,7 @@ export default function Categories({
 
   // Handle dua click
   const handleDuaClick = (subCategory, category, duaId) => {
+    setDuaId(setDuaId(duaId));
     const name = category.cat_name_en
       .replace(/\s+/g, "-")
       .toLowerCase()
@@ -63,7 +74,7 @@ export default function Categories({
 
       <div className="px-3">
         {filteredCategories?.map((category) => (
-          <div className="mb-4" key={category.id}>
+          <div className="mb-4" key={category?.id}>
             <div
               onClick={() => handleCategoryClick(category)}
               className="flex items-center gap-2 p-3 bg-[#F9F9F9] rounded-[10px] mb-2 cursor-pointer"
@@ -90,7 +101,8 @@ export default function Categories({
                 <p className="text-sm font-normal text-[#7E7E7E]">Duas</p>
               </div>
             </div>
-            {activeCategory == category?.id && (
+            {console.log(catId, "catId", "category", category?.id)}
+            {catId == category?.id && (
               <div>
                 <ul className="green-list">
                   {filteredSubCat?.map((singleSubCat) => (
@@ -100,7 +112,7 @@ export default function Categories({
                     >
                       <div
                         className={`flex items-center ${
-                          openSubCatId === singleSubCat?.subcat_id
+                          activeSubCategory === singleSubCat?.subcat_id
                             ? "text-[#1FA45B] font-semibold"
                             : "cursor-pointer"
                         }`}
@@ -110,7 +122,7 @@ export default function Categories({
                       >
                         {singleSubCat.subcat_name_en}
                       </div>
-                      {activeSubCategory == singleSubCat?.subcat_id && (
+                      {subCatId == singleSubCat?.subcat_id && (
                         <ul className="pt-2">
                           {duaList?.map((dua) => (
                             <li

@@ -4,51 +4,34 @@ import Duas from "@/components/Duas";
 import Categories from "@/components/Categories";
 import { useEffect, useState } from "react";
 import { flushSync } from "react-dom";
-// import duas from "@/components/api/dua.json";
-// import categories from "@/components/api/category.json";
-// import subCat from "@/components/api/sub-category.json";
 import Settings from "@/components/Settings";
 import { useFetcher } from "@/components/lib/useFetcher";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
 export default function Home({ searchParams }) {
   const [filteredCategories, setFilteredCategories] = useState([]);
   const [filteredSubCat, setFilteredSubCat] = useState([]);
-  const [duas, setDuas] = useState([]);
   const [openCategory, setOpenCategory] = useState(null);
   const [isCopied, setIsCopied] = useState(false);
   const [duaList, setDuaList] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
-  const catId = searchParams?.cat;
-  const subCatId = searchParams?.subcat;
-  const duaId = searchParams?.dua;
+  // const catId = searchParams?.cat;
+  // const subCatId = searchParams?.subcat;
+  // const duaId = searchParams?.dua;
 
-  // // Category routes
-  // router.get("/categories", categoryController.getCategories);
-  // router.get("/categories/:id", categoryController.getCategory);
-
-  // // Subcategory routes
-  // router.get(
-  //   "/categories/:catId/subcategories",
-  //   subCategoryController.getSubcategoriesByCategory
-  // );
-  // router.get("/subcategories", subCategoryController.getSubcategories);
-
-  // // Dua routes
-  // router.get("/duas", duaController.getAllDua);
-  // router.get("/duas/:duaId", duaController.getDuaById);
-  // router.get(
-  //   "/subcategories/:subcatId/duas",
-  //   duaController.getDuasBySubcategoryId
-  // );
-  // router.get("/categories/:catId/duas", duaController.getDuasByCategoryId);
+  const catId = useSelector((state) => state.category.cat_id);
+  const subCatId = useSelector((state) => state.subcategory.subcat_id);
+  const duaId = useSelector((state) => state.dua.dua_id);
+  console.log("catId", catId);
+  console.log("subCatId", subCatId);
+  console.log("duaId", duaId);
 
   const { data: categories } = useFetcher("/categories");
-  const { data: duasBySubCat } = useFetcher(
-    subCatId && `/subcategories/${subCatId}/duas`
+  const { data: duas } = useFetcher(
+    `/duas/filter?cat_id=${catId}&subcat_id=${subCatId ? subCatId : ""}`
   );
-  const { data: duasbyCat } = useFetcher(catId && `/categories/${catId}/duas`);
   const { data: subCat } = useFetcher(
     subCatId && `/categories/${subCatId}/subcategories`
   );
@@ -66,14 +49,6 @@ export default function Home({ searchParams }) {
   useEffect(() => {
     setFilteredSubCat(subCat);
   }, [subCat]);
-
-  useEffect(() => {
-    setDuas(duasbyCat);
-  }, [duasbyCat, catId]);
-
-  useEffect(() => {
-    setDuas(duasBySubCat);
-  }, [duasBySubCat, subCatId]);
 
   const handleCopy = () => {
     setIsCopied(true);
