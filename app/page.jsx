@@ -62,7 +62,12 @@ export default function Home({ searchParams }) {
           catId={catId}
         />
 
-        <Duas duas={duas} isCopied={isCopied} handleCopy={handleCopy} />
+        <Duas
+          duaId={duaId}
+          duas={duas}
+          isCopied={isCopied}
+          handleCopy={handleCopy}
+        />
         <Settings />
       </div>
     </>

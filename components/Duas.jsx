@@ -6,13 +6,71 @@ import { BsExclamationOctagon } from "react-icons/bs";
 import { CiCircleCheck } from "react-icons/ci";
 import Alert from "./Alert";
 import Audio from "./Audio";
+import { useRef, useEffect } from "react";
+import toast from "react-hot-toast";
+import { FaCheckCircle } from "react-icons/fa";
 
-export default function Duas({ duas, handleCopy, isCopied }) {
+export default function Duas({ duas, duaId, isCopied }) {
+  const duaRefs = useRef({});
+
+  useEffect(() => {
+    if (duaId && duaRefs.current[duaId]) {
+      duaRefs.current[duaId].scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [duaId]);
+
+  const handleCopy = (dua) => {
+    const textToCopy = `
+    ${dua.id}. ${dua.dua_name_en}
+    ${dua.top_en ? dua.top_en : ""}
+    ${dua.dua_arabic ? `Dua (Arabic): ${dua.dua_arabic}` : ""}
+    ${dua.translation_en ? `Transliteration: ${dua.translation_en}` : ""}
+    ${dua.translation_en ? `Translation: ${dua.translation_en}` : ""}
+    ${dua.refference_en ? `Reference: ${dua.refference_en}` : ""}
+  `.trim();
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard
+        .writeText(textToCopy)
+        .then(() => {
+          toast.success("Dua copied successfully!", {
+            style: {
+              background: "black",
+              color: "white",
+            },
+            iconTheme: {
+              primary: "black", // Icon color
+              secondary: "white", // Icon background color
+            },
+            icon: (
+              <FaCheckCircle
+                style={{
+                  color: "black",
+                  background: "white",
+                  borderRadius: "50%",
+                }}
+              />
+            ),
+          });
+        })
+        .catch((err) => {
+          console.error("Failed to copy text:", err);
+          toast.error("Failed to copy dua. Please try again.");
+        });
+    }
+  };
+
   return (
     <div className="mx-2 w-3/4 relative lg:right-0 right-14 m-3 lg:m-0 lg:top-0 lg:overflow-auto scrollbar-thin lg:h-[52.8rem] text-[#393939]">
       <ul>
         {duas?.map((dua) => (
-          <li className="mb-4 bg-white p-5 rounded-2xl mr-0 width" key={dua.id}>
+          <li
+            className="mb-4 bg-white p-5 rounded-2xl mr-0 width"
+            key={dua.id}
+            ref={(el) => (duaRefs.current[dua?.dua_id] = el)}
+          >
             {/* Dua Section */}
             <div className="flex text-[#1FA45B] font-semibold text-lg items-center gap-3">
               <img src="https://i.ibb.co/8sQ2QSk/allah-1-Traced.png" alt="" />
@@ -49,19 +107,113 @@ export default function Duas({ duas, handleCopy, isCopied }) {
 
             {/* Icons */}
             <div className="flex justify-end text-xl text-gray-400 gap-4 mt-3">
-              <div onClick={handleCopy} className="cursor-pointer" title="copy">
+              <div
+                onClick={() => handleCopy(dua)}
+                className="cursor-pointer"
+                title="copy"
+              >
                 <LuCopy />
               </div>
-              <LuBookmark />
-              <IoBulbOutline />
-              <IoShareSocialOutline />
-              <BsExclamationOctagon />
+              <LuBookmark
+                className="cursor-pointer"
+                onClick={() =>
+                  toast.success("Coming Soon Inshaallah", {
+                    style: {
+                      background: "black",
+                      color: "white",
+                    },
+                    iconTheme: {
+                      primary: "black", // Icon color
+                      secondary: "white", // Icon background color
+                    },
+                    icon: (
+                      <FaCheckCircle
+                        style={{
+                          color: "black",
+                          background: "white",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    ),
+                  })
+                }
+              />
+              <IoBulbOutline
+                className="cursor-pointer"
+                onClick={() =>
+                  toast.success("Coming Soon Inshaallah", {
+                    style: {
+                      background: "black",
+                      color: "white",
+                    },
+                    iconTheme: {
+                      primary: "black", // Icon color
+                      secondary: "white", // Icon background color
+                    },
+                    icon: (
+                      <FaCheckCircle
+                        style={{
+                          color: "black",
+                          background: "white",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    ),
+                  })
+                }
+              />
+              <IoShareSocialOutline
+                className="cursor-pointer"
+                onClick={() =>
+                  toast.success("Coming Soon Inshaallah", {
+                    style: {
+                      background: "black",
+                      color: "white",
+                    },
+                    iconTheme: {
+                      primary: "black", // Icon color
+                      secondary: "white", // Icon background color
+                    },
+                    icon: (
+                      <FaCheckCircle
+                        style={{
+                          color: "black",
+                          background: "white",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    ),
+                  })
+                }
+              />
+              <BsExclamationOctagon
+                className="cursor-pointer"
+                onClick={() =>
+                  toast.success("Coming Soon Inshaallah", {
+                    style: {
+                      background: "black",
+                      color: "white",
+                    },
+                    iconTheme: {
+                      primary: "black", // Icon color
+                      secondary: "white", // Icon background color
+                    },
+                    icon: (
+                      <FaCheckCircle
+                        style={{
+                          color: "black",
+                          background: "white",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    ),
+                  })
+                }
+              />
             </div>
           </li>
         ))}
       </ul>
-
-      {isCopied && <Alert message="Copied" />}
     </div>
   );
 }
