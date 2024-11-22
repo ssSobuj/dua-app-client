@@ -7,9 +7,9 @@ import { GoSearch } from "react-icons/go";
 
 const NavTop = () => {
   return (
-    <div className="flex justify-between  items-center max-h-14 mt-2 -ml-10 lg:ml-4 mb-4">
+    <div className="flex justify-between  items-center max-h-14 mt-2 ml-10 lg:ml-4 mb-4">
       <h1 className="text-2xl dark:text-dark-text">Duas Page</h1>
-      <div className="flex ml-[100px] gap-x-36">
+      <div className="flex lg:ml-[100px] lg:gap-x-36">
         <div className="relative">
           <input
             type="text"

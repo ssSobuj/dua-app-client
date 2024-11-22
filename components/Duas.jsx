@@ -66,7 +66,7 @@ export default function Duas({ duas, duaId, duaLoading }) {
   const skeletonArray = [{ id: 1 }, { id: 2 }];
 
   return (
-    <div className="mx-2 w-3/4 relative lg:right-0 right-14 m-3 lg:m-0 lg:top-0 lg:overflow-auto scrollbar-thin lg:h-[52.8rem] text-[#393939]">
+    <div className="mx-2 md:w-full relative lg:right-0 m-3 lg:m-0 lg:top-0 lg:overflow-auto scrollbar-thin lg:h-[52.8rem] text-[#393939]">
       <ul>
         {duaLoading ? (
           skeletonArray.map((_, index) => (

@@ -55,7 +55,7 @@ export default function Categories({
   };
 
   return (
-    <div className="bg-white w-1/4 ml-3 pt-0 rounded-2xl overflow-auto scrollbar-thin h-[90vh] ">
+    <div className="bg-white col-lg:w-1/4 ml-3 pt-0 rounded-2xl overflow-auto scrollbar-thin h-[90vh] ">
       <p className="bg-[#1FA45B] text-white text-center font-normal px-3 py-4 text-m rounded-t-lg sticky top-0 w-76 z-10">
         Categories
       </p>
@@ -74,7 +74,7 @@ export default function Categories({
       <div className="px-3">
         {categoriesLoading ? (
           Array.from({ length: 10 }).map((item, i) => (
-            <div k className="mb-4" key={i}>
+            <div className="mb-4" key={i}>
               <div className="flex items-center gap-2 p-3 bg-[#F9F9F9] rounded-[10px] mb-2 cursor-pointer">
                 <Skeleton width={50} height={50} />
                 <div>
