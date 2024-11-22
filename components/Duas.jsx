@@ -172,113 +172,119 @@ export default function Duas({ duas, duaId, duaLoading }) {
                 </p>
 
                 {/* Dua Audio */}
-                {dua.audio && <AudioPlayer audioSrc={"/test.mp3"} />}
 
                 {/* Icons */}
-                <div className="flex justify-end text-xl text-gray-400 gap-4 mt-3">
-                  <div
-                    onClick={() => handleCopy(dua)}
-                    className="cursor-pointer"
-                    title="copy"
-                  >
-                    <LuCopy />
+                <div className={`flex justify-between items-center mt-5`}>
+                  {dua.audio && (
+                    <AudioPlayer
+                      audioSrc={`https://api.duaruqyah.com/duaaudiofinal/${dua?.dua_id}.mp3`}
+                    />
+                  )}
+                  <div className="flex justify-end text-xl text-gray-400 gap-4 ">
+                    <div
+                      onClick={() => handleCopy(dua)}
+                      className="cursor-pointer"
+                      title="copy"
+                    >
+                      <LuCopy />
+                    </div>
+                    <LuBookmark
+                      className="cursor-pointer"
+                      onClick={() =>
+                        toast.success("Coming Soon Inshaallah", {
+                          style: {
+                            background: "black",
+                            color: "white",
+                          },
+                          iconTheme: {
+                            primary: "black", // Icon color
+                            secondary: "white", // Icon background color
+                          },
+                          icon: (
+                            <FaCheckCircle
+                              style={{
+                                color: "black",
+                                background: "white",
+                                borderRadius: "50%",
+                              }}
+                            />
+                          ),
+                        })
+                      }
+                    />
+                    <IoBulbOutline
+                      className="cursor-pointer"
+                      onClick={() =>
+                        toast.success("Coming Soon Inshaallah", {
+                          style: {
+                            background: "black",
+                            color: "white",
+                          },
+                          iconTheme: {
+                            primary: "black", // Icon color
+                            secondary: "white", // Icon background color
+                          },
+                          icon: (
+                            <FaCheckCircle
+                              style={{
+                                color: "black",
+                                background: "white",
+                                borderRadius: "50%",
+                              }}
+                            />
+                          ),
+                        })
+                      }
+                    />
+                    <IoShareSocialOutline
+                      className="cursor-pointer"
+                      onClick={() =>
+                        toast.success("Coming Soon Inshaallah", {
+                          style: {
+                            background: "black",
+                            color: "white",
+                          },
+                          iconTheme: {
+                            primary: "black", // Icon color
+                            secondary: "white", // Icon background color
+                          },
+                          icon: (
+                            <FaCheckCircle
+                              style={{
+                                color: "black",
+                                background: "white",
+                                borderRadius: "50%",
+                              }}
+                            />
+                          ),
+                        })
+                      }
+                    />
+                    <BsExclamationOctagon
+                      className="cursor-pointer"
+                      onClick={() =>
+                        toast.success("Coming Soon Inshaallah", {
+                          style: {
+                            background: "black",
+                            color: "white",
+                          },
+                          iconTheme: {
+                            primary: "black", // Icon color
+                            secondary: "white", // Icon background color
+                          },
+                          icon: (
+                            <FaCheckCircle
+                              style={{
+                                color: "black",
+                                background: "white",
+                                borderRadius: "50%",
+                              }}
+                            />
+                          ),
+                        })
+                      }
+                    />
                   </div>
-                  <LuBookmark
-                    className="cursor-pointer"
-                    onClick={() =>
-                      toast.success("Coming Soon Inshaallah", {
-                        style: {
-                          background: "black",
-                          color: "white",
-                        },
-                        iconTheme: {
-                          primary: "black", // Icon color
-                          secondary: "white", // Icon background color
-                        },
-                        icon: (
-                          <FaCheckCircle
-                            style={{
-                              color: "black",
-                              background: "white",
-                              borderRadius: "50%",
-                            }}
-                          />
-                        ),
-                      })
-                    }
-                  />
-                  <IoBulbOutline
-                    className="cursor-pointer"
-                    onClick={() =>
-                      toast.success("Coming Soon Inshaallah", {
-                        style: {
-                          background: "black",
-                          color: "white",
-                        },
-                        iconTheme: {
-                          primary: "black", // Icon color
-                          secondary: "white", // Icon background color
-                        },
-                        icon: (
-                          <FaCheckCircle
-                            style={{
-                              color: "black",
-                              background: "white",
-                              borderRadius: "50%",
-                            }}
-                          />
-                        ),
-                      })
-                    }
-                  />
-                  <IoShareSocialOutline
-                    className="cursor-pointer"
-                    onClick={() =>
-                      toast.success("Coming Soon Inshaallah", {
-                        style: {
-                          background: "black",
-                          color: "white",
-                        },
-                        iconTheme: {
-                          primary: "black", // Icon color
-                          secondary: "white", // Icon background color
-                        },
-                        icon: (
-                          <FaCheckCircle
-                            style={{
-                              color: "black",
-                              background: "white",
-                              borderRadius: "50%",
-                            }}
-                          />
-                        ),
-                      })
-                    }
-                  />
-                  <BsExclamationOctagon
-                    className="cursor-pointer"
-                    onClick={() =>
-                      toast.success("Coming Soon Inshaallah", {
-                        style: {
-                          background: "black",
-                          color: "white",
-                        },
-                        iconTheme: {
-                          primary: "black", // Icon color
-                          secondary: "white", // Icon background color
-                        },
-                        icon: (
-                          <FaCheckCircle
-                            style={{
-                              color: "black",
-                              background: "white",
-                              borderRadius: "50%",
-                            }}
-                          />
-                        ),
-                      })
-                    }
-                  />
                 </div>
               </li>
             ))}

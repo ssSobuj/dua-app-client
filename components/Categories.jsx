@@ -73,8 +73,8 @@ export default function Categories({
 
       <div className="px-3">
         {categoriesLoading ? (
-          Array.from({ length: 10 }).map((item) => (
-            <div className="mb-4" key={item?.length}>
+          Array.from({ length: 10 }).map((item, i) => (
+            <div k className="mb-4" key={i}>
               <div className="flex items-center gap-2 p-3 bg-[#F9F9F9] rounded-[10px] mb-2 cursor-pointer">
                 <Skeleton width={50} height={50} />
                 <div>
@@ -159,7 +159,7 @@ export default function Categories({
                                   duaList?.map((dua) => (
                                     <li
                                       className={`cursor-pointer text-sm py-2 ${
-                                        duaId == dua.id
+                                        duaId == dua.dua_id
                                           ? "text-[#1FA45B] font-semibold"
                                           : "cursor-pointer"
                                       }`}
@@ -168,7 +168,7 @@ export default function Categories({
                                         handleDuaClick(
                                           singleSubCat,
                                           category,
-                                          dua?.id
+                                          dua?.dua_id
                                         )
                                       }
                                     >

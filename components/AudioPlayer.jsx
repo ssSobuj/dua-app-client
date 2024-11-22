@@ -53,11 +53,6 @@ const AudioPlayer = ({ audioSrc }) => {
     const newTime =
       (clickPosition / progressBarWidth) * audioRef.current.duration;
 
-    // Ensure audio element is not paused and is ready to seek
-    if (audioRef.current.paused) {
-      audioRef.current.play();
-    }
-
     audioRef.current.currentTime = newTime; // Update the audio current time
     setCurrentTime(newTime); // Update the state to reflect the new time
   };
@@ -69,46 +64,42 @@ const AudioPlayer = ({ audioSrc }) => {
         <img src="/audiobtn.svg" alt="" className="cursor-pointer" />
       </button>
 
-      {/* Progress Bar */}
-      <div className="flex-grow relative" onClick={handleProgressClick}>
-        <div className="h-2 bg-gray-300 rounded-full">
-          <div
-            ref={progressRef}
-            className="h-full bg-green-500 rounded-full"
-            style={{
-              width: `${
-                (currentTime / (audioRef.current?.duration || 1)) * 100
-              }%`,
-            }}
-          ></div>
-        </div>
-      </div>
-
-      {/* Running Time */}
-      <span className="text-sm text-gray-600">
-        {new Date(currentTime * 1000).toISOString().substr(14, 5)}
-      </span>
-
-      {/* Loop Button */}
-      <button
-        className={`focus:outline-none ${
-          isLooping ? "text-green-500" : "text-gray-400"
-        }`} // Active color for loop
-        onClick={toggleLoop}
-      >
-        <ImLoop />
-      </button>
-
-      {/* Replay Button */}
-      <button
-        className="text-gray-400 focus:outline-none"
-        onClick={handleReplay}
-      >
-        <ImLoop />
-      </button>
-
-      {/* Audio element */}
+      {/* Always render the audio element */}
       <audio ref={audioRef} src={audioSrc} />
+
+      {isPlaying && (
+        <>
+          {/* Progress Bar */}
+          <div className="flex-grow relative" onClick={handleProgressClick}>
+            <div className="h-2 bg-gray-300 rounded-full cursor-pointer">
+              <div
+                ref={progressRef}
+                className="h-full bg-green-500 rounded-full"
+                style={{
+                  width: `${
+                    (currentTime / (audioRef.current?.duration || 1)) * 100
+                  }%`,
+                }}
+              ></div>
+            </div>
+          </div>
+
+          {/* Running Time */}
+          <span className="text-sm text-gray-600">
+            {new Date(currentTime * 1000).toISOString().substr(14, 5)}
+          </span>
+
+          {/* Loop Button */}
+          <button
+            className={`focus:outline-none ${
+              isLooping ? "text-black-600" : "text-gray-400"
+            }`} // Active color for loop
+            onClick={toggleLoop}
+          >
+            <ImLoop />
+          </button>
+        </>
+      )}
     </div>
   );
 };

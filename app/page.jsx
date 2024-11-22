@@ -71,7 +71,7 @@ export default function Home({ searchParams }) {
         handleCopy={handleCopy}
         duaLoading={duaLoading}
       />
-      {/* <Settings /> */}
+      <Settings />
     </div>
   );
 }
