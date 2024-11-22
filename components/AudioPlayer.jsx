@@ -71,10 +71,10 @@ const AudioPlayer = ({ audioSrc }) => {
 
       {/* Progress Bar */}
       <div className="flex-grow relative" onClick={handleProgressClick}>
-        <div className="h-2 bg-gray-300 rounded-full cursor-pointer">
+        <div className="h-2 bg-gray-300 rounded-full">
           <div
             ref={progressRef}
-            className="h-full bg-green-500 rounded-full cursor-pointer"
+            className="h-full bg-green-500 rounded-full"
             style={{
               width: `${
                 (currentTime / (audioRef.current?.duration || 1)) * 100
@@ -95,6 +95,14 @@ const AudioPlayer = ({ audioSrc }) => {
           isLooping ? "text-green-500" : "text-gray-400"
         }`} // Active color for loop
         onClick={toggleLoop}
+      >
+        <ImLoop />
+      </button>
+
+      {/* Replay Button */}
+      <button
+        className="text-gray-400 focus:outline-none"
+        onClick={handleReplay}
       >
         <ImLoop />
       </button>
