@@ -10,7 +10,7 @@ import { setDuaId } from "@/redux/features/duaSlice";
 
 export default function Categories({
   categories,
-  filteredSubCat,
+  subcategories,
   duaList,
   searchQuery,
   handleSearch,
@@ -18,6 +18,9 @@ export default function Categories({
   subCatId,
   catId,
 }) {
+  console.log("subcategories", subcategories);
+  console.log("categories", categories);
+
   const router = useRouter();
   const handleCategoryClick = (category) => {
     const name = category.cat_name_en
@@ -33,7 +36,9 @@ export default function Categories({
       .replace(/\s+/g, "-")
       .toLowerCase()
       .replace("'", "");
-    router.push(`?${name}&cat=${category?.id}&subcat=${subCategory.subcat_id}`);
+    router.push(
+      `?${name}&cat=${category?.cat_id}&subcat=${subCategory?.subcat_id}`
+    );
   };
 
   // Handle dua click
@@ -99,52 +104,59 @@ export default function Categories({
                 <p className="text-sm font-normal text-[#7E7E7E]">Duas</p>
               </div>
             </div>
-            {catId == category?.id && (
+            {catId == category?.cat_id && (
               <div>
                 <ul className="green-list">
-                  {filteredSubCat?.map((singleSubCat) => (
-                    <li
-                      className="text-[#373737] py-2 text-base green-dot cursor-pointer"
-                      key={singleSubCat?.id}
-                    >
-                      <div
-                        className={`flex items-center ${
-                          subCatId == singleSubCat?.subcat_id
-                            ? "text-[#1FA45B] font-semibold"
-                            : "cursor-pointer"
-                        }`}
-                        onClick={() => {
-                          handleSubCategoryClick(singleSubCat, category);
-                        }}
+                  {console.log(subcategories)}
+                  {subcategories &&
+                    subcategories?.map((singleSubCat) => (
+                      <li
+                        className="text-[#373737] py-2 text-base green-dot cursor-pointer"
+                        key={singleSubCat?.id}
                       >
-                        {singleSubCat.subcat_name_en}
-                      </div>
-                      {subCatId == singleSubCat?.subcat_id && (
-                        <ul className="pt-2">
-                          {duaList?.map((dua) => (
-                            <li
-                              className={`cursor-pointer text-sm py-2 ${
-                                duaId == dua.id
-                                  ? "text-[#1FA45B] font-semibold"
-                                  : "cursor-pointer"
-                              }`}
-                              key={dua.id}
-                              onClick={() =>
-                                handleDuaClick(singleSubCat, category, dua?.id)
-                              }
-                            >
-                              <div className="flex items-center gap-2">
-                                <IoIosArrowForward className="text-[#1FA45B] w-[24px] shrink-0" />
-                                <span className="flex-1">
-                                  {dua.dua_name_en}
-                                </span>
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </li>
-                  ))}
+                        <div
+                          className={`flex items-center ${
+                            subCatId == singleSubCat?.subcat_id
+                              ? "text-[#1FA45B] font-semibold"
+                              : "cursor-pointer"
+                          }`}
+                          onClick={() =>
+                            handleSubCategoryClick(singleSubCat, category)
+                          }
+                        >
+                          {singleSubCat.subcat_name_en}
+                        </div>
+                        {subCatId == singleSubCat?.subcat_id && (
+                          <ul className="pt-2">
+                            {duaList &&
+                              duaList?.map((dua) => (
+                                <li
+                                  className={`cursor-pointer text-sm py-2 ${
+                                    duaId == dua.id
+                                      ? "text-[#1FA45B] font-semibold"
+                                      : "cursor-pointer"
+                                  }`}
+                                  key={dua.id}
+                                  onClick={() =>
+                                    handleDuaClick(
+                                      singleSubCat,
+                                      category,
+                                      dua?.id
+                                    )
+                                  }
+                                >
+                                  <div className="flex items-center gap-2">
+                                    <IoIosArrowForward className="text-[#1FA45B] w-[24px] shrink-0" />
+                                    <span className="flex-1">
+                                      {dua.dua_name_en}
+                                    </span>
+                                  </div>
+                                </li>
+                              ))}
+                          </ul>
+                        )}
+                      </li>
+                    ))}
                 </ul>
               </div>
             )}

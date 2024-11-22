@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 
 export default function Home({ searchParams }) {
   const [filteredCategories, setFilteredCategories] = useState([]);
-  const [filteredSubCat, setFilteredSubCat] = useState([]);
   const [isCopied, setIsCopied] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
@@ -22,10 +21,9 @@ export default function Home({ searchParams }) {
 
   const { data: categories } = useFetcher(`/categories?search=${searchQuery}`);
   const { data: duas } = useFetcher(
-    catId &&
-      `/duas/filter?cat_id=${catId}&subcat_id=${subCatId ? subCatId : ""}`
+    `/duas/filter?cat_id=${catId}&subcat_id=${subCatId ? subCatId : ""}`
   );
-  const { data: subCat } = useFetcher(
+  const { data: subcategories } = useFetcher(
     catId && `/subcategories?cat_id=${catId}`
   );
 
@@ -33,11 +31,7 @@ export default function Home({ searchParams }) {
     if (!catId) {
       router.push("?duas-importance&cat=1");
     }
-  }, [router]);
-
-  useEffect(() => {
-    setFilteredSubCat(subCat);
-  }, [subCat]);
+  }, [router, catId]);
 
   const handleCopy = () => {
     setIsCopied(true);
@@ -58,7 +52,7 @@ export default function Home({ searchParams }) {
     <>
       <div className="flex lg:flex-row flex-col gap-4">
         <Categories
-          filteredSubCat={filteredSubCat}
+          subcategories={subcategories}
           categories={categories}
           duaList={duas}
           searchQuery={searchQuery}
