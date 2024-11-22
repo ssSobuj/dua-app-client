@@ -48,7 +48,7 @@ export default function Categories({
       .toLowerCase()
       .replace("'", "");
     router.push(
-      `?${name}&cat=${category?.id}&subcat=${subCategory.subcat_id}&dua=${duaId}`
+      `?${name}&cat=${category?.cat_id}&subcat=${subCategory.subcat_id}&dua=${duaId}`
     );
   };
 
