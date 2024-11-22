@@ -9,23 +9,17 @@ import { setSubcategoryId } from "@/redux/features/subcategorySlice";
 import { setDuaId } from "@/redux/features/duaSlice";
 
 export default function Categories({
-  activeCategory,
-  activeSubCategory,
-  activeDua,
+  categories,
   filteredSubCat,
   duaList,
   searchQuery,
   handleSearch,
-  filteredCategories,
+  duaId,
+  subCatId,
+  catId,
 }) {
-  const dispatch = useDispatch();
-  const catId = useSelector((state) => state.category.cat_id);
-  const subCatId = useSelector((state) => state.subcategory.subcat_id);
-  const duaId = useSelector((state) => state.dua.dua_id);
-
   const router = useRouter();
   const handleCategoryClick = (category) => {
-    dispatch(setCategoryId(category?.cat_id));
     const name = category.cat_name_en
       .replace(/\s+/g, "-")
       .toLowerCase()
@@ -35,7 +29,6 @@ export default function Categories({
 
   // Handle subcategory click
   const handleSubCategoryClick = (subCategory, category) => {
-    dispatch(setSubcategoryId(subCategory?.subcat_id));
     const name = category.cat_name_en
       .replace(/\s+/g, "-")
       .toLowerCase()
@@ -45,7 +38,6 @@ export default function Categories({
 
   // Handle dua click
   const handleDuaClick = (subCategory, category, duaId) => {
-    setDuaId(setDuaId(duaId));
     const name = category.cat_name_en
       .replace(/\s+/g, "-")
       .toLowerCase()
@@ -73,7 +65,7 @@ export default function Categories({
       </div>
 
       <div className="px-3">
-        {filteredCategories?.map((category) => (
+        {categories?.map((category) => (
           <div className="mb-4" key={category?.id}>
             <div
               onClick={() => handleCategoryClick(category)}
@@ -87,7 +79,13 @@ export default function Categories({
                 className="p-2 rounded-lg bg-[#E8F0F5]"
               />
               <div>
-                <h3 className="font-semibold text-base w-40">
+                <h3
+                  className={`font-semibold text-base w-40 ${
+                    catId == category?.cat_id
+                      ? "text-[#1FA45B] font-semibold"
+                      : "cursor-pointer"
+                  }`}
+                >
                   {category.cat_name_en}
                 </h3>
                 <p className="text-sm font-normal text-[#7E7E7E]">
@@ -101,7 +99,6 @@ export default function Categories({
                 <p className="text-sm font-normal text-[#7E7E7E]">Duas</p>
               </div>
             </div>
-            {console.log(catId, "catId", "category", category?.id)}
             {catId == category?.id && (
               <div>
                 <ul className="green-list">
@@ -112,7 +109,7 @@ export default function Categories({
                     >
                       <div
                         className={`flex items-center ${
-                          activeSubCategory === singleSubCat?.subcat_id
+                          subCatId == singleSubCat?.subcat_id
                             ? "text-[#1FA45B] font-semibold"
                             : "cursor-pointer"
                         }`}
@@ -127,7 +124,7 @@ export default function Categories({
                           {duaList?.map((dua) => (
                             <li
                               className={`cursor-pointer text-sm py-2 ${
-                                activeDua == dua.id
+                                duaId == dua.id
                                   ? "text-[#1FA45B] font-semibold"
                                   : "cursor-pointer"
                               }`}
@@ -136,9 +133,11 @@ export default function Categories({
                                 handleDuaClick(singleSubCat, category, dua?.id)
                               }
                             >
-                              <div className="flex items-center">
-                                <IoIosArrowForward className="text-[#1FA45B] text-lg mr-2" />
-                                {dua.dua_name_en}
+                              <div className="flex items-center gap-2">
+                                <IoIosArrowForward className="text-[#1FA45B] w-[24px] shrink-0" />
+                                <span className="flex-1">
+                                  {dua.dua_name_en}
+                                </span>
                               </div>
                             </li>
                           ))}
