@@ -9,6 +9,7 @@ import { useRef, useEffect } from "react";
 import toast from "react-hot-toast";
 import { FaCheckCircle } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
+import AudioPlayer from "./AudioPlayer";
 
 export default function Duas({ duas, duaId, duaLoading }) {
   const duaRefs = useRef({});
@@ -171,7 +172,7 @@ export default function Duas({ duas, duaId, duaLoading }) {
                 </p>
 
                 {/* Dua Audio */}
-                {dua.audio && <Audio audio={dua.audio} />}
+                {dua.audio && <AudioPlayer audioSrc={"/test.mp3"} />}
 
                 {/* Icons */}
                 <div className="flex justify-end text-xl text-gray-400 gap-4 mt-3">
