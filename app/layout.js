@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
       <ReduxProvider>
         <Toaster position="bottom-center" reverseOrder={false} />
         <body className="bg-gray-200 h-screen">
-          <div className="flex h-full p-[24px] pb-0 gap-4">
+          <div className="flex h-full pb-0 gap-0 md:gap-4">
             {/* Sidebar with scroll */}
             <NavAside className="w-64 h-full overflow-y-auto bg-white shadow-lg" />
 

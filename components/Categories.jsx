@@ -55,7 +55,7 @@ export default function Categories({
   };
 
   return (
-    <div className="bg-white col-lg:w-1/4 ml-3 pt-0 rounded-2xl overflow-auto scrollbar-thin h-[90vh] ">
+    <div className="bg-white min-w-[22rem] col-lg:w-1/4 ml-3 pt-0 rounded-2xl overflow-auto scrollbar-thin h-[90vh] ">
       <p className="bg-[#1FA45B] text-white text-center font-normal px-3 py-4 text-m rounded-t-lg sticky top-0 w-76 z-10">
         Categories
       </p>
