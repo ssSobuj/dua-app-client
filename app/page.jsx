@@ -3,14 +3,11 @@
 import Duas from "@/components/Duas";
 import Categories from "@/components/Categories";
 import { useEffect, useState } from "react";
-import { flushSync } from "react-dom";
 import Settings from "@/components/Settings";
 import { useFetcher } from "@/components/lib/useFetcher";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
 
 export default function Home({ searchParams }) {
-  const [filteredCategories, setFilteredCategories] = useState([]);
   const [isCopied, setIsCopied] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
@@ -44,7 +41,6 @@ export default function Home({ searchParams }) {
   };
 
   // Search Query
-
   const handleSearch = (e) => {
     const query = e.target.value;
     setSearchQuery(query);

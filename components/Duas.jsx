@@ -3,8 +3,6 @@
 import { IoBulbOutline, IoShareSocialOutline } from "react-icons/io5";
 import { LuBookmark, LuCopy } from "react-icons/lu";
 import { BsExclamationOctagon } from "react-icons/bs";
-import { CiCircleCheck } from "react-icons/ci";
-import Audio from "./Audio";
 import { useRef, useEffect } from "react";
 import toast from "react-hot-toast";
 import { FaCheckCircle } from "react-icons/fa";
@@ -61,6 +59,28 @@ export default function Duas({ duas, duaId, duaLoading }) {
           toast.error("Failed to copy dua. Please try again.");
         });
     }
+  };
+
+  const handleShowMsg = () => {
+    toast.success("Coming Soon Inshaallah", {
+      style: {
+        background: "black",
+        color: "white",
+      },
+      iconTheme: {
+        primary: "black",
+        secondary: "white",
+      },
+      icon: (
+        <FaCheckCircle
+          style={{
+            color: "black",
+            background: "white",
+            borderRadius: "50%",
+          }}
+        />
+      ),
+    });
   };
 
   const skeletonArray = [{ id: 1 }, { id: 2 }];
@@ -171,8 +191,6 @@ export default function Duas({ duas, duaId, duaLoading }) {
                   {dua.refference_en}
                 </p>
 
-                {/* Dua Audio */}
-
                 {/* Icons */}
                 <div className={`flex justify-between items-center mt-5`}>
                   {dua.audio && (
@@ -197,8 +215,8 @@ export default function Duas({ duas, duaId, duaLoading }) {
                             color: "white",
                           },
                           iconTheme: {
-                            primary: "black", // Icon color
-                            secondary: "white", // Icon background color
+                            primary: "black",
+                            secondary: "white",
                           },
                           icon: (
                             <FaCheckCircle
@@ -214,75 +232,15 @@ export default function Duas({ duas, duaId, duaLoading }) {
                     />
                     <IoBulbOutline
                       className="cursor-pointer"
-                      onClick={() =>
-                        toast.success("Coming Soon Inshaallah", {
-                          style: {
-                            background: "black",
-                            color: "white",
-                          },
-                          iconTheme: {
-                            primary: "black", // Icon color
-                            secondary: "white", // Icon background color
-                          },
-                          icon: (
-                            <FaCheckCircle
-                              style={{
-                                color: "black",
-                                background: "white",
-                                borderRadius: "50%",
-                              }}
-                            />
-                          ),
-                        })
-                      }
+                      onClick={handleShowMsg}
                     />
                     <IoShareSocialOutline
                       className="cursor-pointer"
-                      onClick={() =>
-                        toast.success("Coming Soon Inshaallah", {
-                          style: {
-                            background: "black",
-                            color: "white",
-                          },
-                          iconTheme: {
-                            primary: "black", // Icon color
-                            secondary: "white", // Icon background color
-                          },
-                          icon: (
-                            <FaCheckCircle
-                              style={{
-                                color: "black",
-                                background: "white",
-                                borderRadius: "50%",
-                              }}
-                            />
-                          ),
-                        })
-                      }
+                      onClick={handleShowMsg}
                     />
                     <BsExclamationOctagon
                       className="cursor-pointer"
-                      onClick={() =>
-                        toast.success("Coming Soon Inshaallah", {
-                          style: {
-                            background: "black",
-                            color: "white",
-                          },
-                          iconTheme: {
-                            primary: "black", // Icon color
-                            secondary: "white", // Icon background color
-                          },
-                          icon: (
-                            <FaCheckCircle
-                              style={{
-                                color: "black",
-                                background: "white",
-                                borderRadius: "50%",
-                              }}
-                            />
-                          ),
-                        })
-                      }
+                      onClick={handleShowMsg}
                     />
                   </div>
                 </div>

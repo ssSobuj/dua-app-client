@@ -20,10 +20,9 @@ export default function Categories({
   catId,
   categoriesLoading,
 }) {
-  console.log("subcategories", subcategories);
-  console.log("categories", categories);
-
   const router = useRouter();
+
+  // Handle category click
   const handleCategoryClick = (category) => {
     const name = category.cat_name_en
       .replace(/\s+/g, "-")
