@@ -1,10 +1,10 @@
 import NavAside from "@/components/layouts/NavAside";
 import NavTop from "@/components/layouts/NavTop";
-import "react-toastify/dist/ReactToastify.css";
+import "react-loading-skeleton/dist/skeleton.css";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import ReduxProvider from "@/redux/Provider";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: "Dua & Ruqyah",

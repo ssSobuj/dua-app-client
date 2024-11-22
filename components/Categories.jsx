@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCategoryId } from "@/redux/features/categorySlice";
 import { setSubcategoryId } from "@/redux/features/subcategorySlice";
 import { setDuaId } from "@/redux/features/duaSlice";
+import Skeleton from "react-loading-skeleton";
 
 export default function Categories({
   categories,
@@ -17,6 +18,7 @@ export default function Categories({
   duaId,
   subCatId,
   catId,
+  categoriesLoading,
 }) {
   console.log("subcategories", subcategories);
   console.log("categories", categories);
@@ -70,98 +72,125 @@ export default function Categories({
       </div>
 
       <div className="px-3">
-        {categories?.map((category) => (
-          <div className="mb-4" key={category?.id}>
-            <div
-              onClick={() => handleCategoryClick(category)}
-              className="flex items-center gap-2 p-3 bg-[#F9F9F9] rounded-[10px] mb-2 cursor-pointer"
-            >
-              <Image
-                src="https://i.ibb.co/Km5k3WD/4b123749b99b0322305c72c5d565ddf3.png"
-                alt=""
-                width={50}
-                height={50}
-                className="p-2 rounded-lg bg-[#E8F0F5]"
-              />
-              <div>
-                <h3
-                  className={`font-semibold text-base w-40 ${
-                    catId == category?.cat_id
-                      ? "text-[#1FA45B] font-semibold"
-                      : "cursor-pointer"
-                  }`}
-                >
-                  {category.cat_name_en}
-                </h3>
-                <p className="text-sm font-normal text-[#7E7E7E]">
-                  Subcategory: {category.no_of_subcat}
-                </p>
-              </div>
-              <div className="text-center text-gray-500">
-                <p className="text-base font-semibold text-[#393939]">
-                  {category.no_of_dua}
-                </p>
-                <p className="text-sm font-normal text-[#7E7E7E]">Duas</p>
+        {categoriesLoading ? (
+          Array.from({ length: 10 }).map((item) => (
+            <div className="mb-4" key={item?.length}>
+              <div className="flex items-center gap-2 p-3 bg-[#F9F9F9] rounded-[10px] mb-2 cursor-pointer">
+                <Skeleton width={50} height={50} />
+                <div>
+                  <Skeleton height={20} width={150} />
+                  <p className="text-sm font-normal text-[#7E7E7E]">
+                    <Skeleton height={15} width={120} />
+                  </p>
+                </div>
+                <div className="text-center text-gray-500">
+                  <p className="text-base font-semibold text-[#393939]">
+                    <Skeleton height={10} width={50} />
+                  </p>
+                  <p className="text-sm font-normal text-[#7E7E7E]">
+                    <Skeleton height={10} width={50} />
+                  </p>
+                </div>
               </div>
             </div>
-            {catId == category?.cat_id && (
-              <div>
-                <ul className="green-list">
-                  {console.log(subcategories)}
-                  {subcategories &&
-                    subcategories?.map((singleSubCat) => (
-                      <li
-                        className="text-[#373737] py-2 text-base green-dot cursor-pointer"
-                        key={singleSubCat?.id}
-                      >
-                        <div
-                          className={`flex items-center ${
-                            subCatId == singleSubCat?.subcat_id
-                              ? "text-[#1FA45B] font-semibold"
-                              : "cursor-pointer"
-                          }`}
-                          onClick={() =>
-                            handleSubCategoryClick(singleSubCat, category)
-                          }
-                        >
-                          {singleSubCat.subcat_name_en}
-                        </div>
-                        {subCatId == singleSubCat?.subcat_id && (
-                          <ul className="pt-2">
-                            {duaList &&
-                              duaList?.map((dua) => (
-                                <li
-                                  className={`cursor-pointer text-sm py-2 ${
-                                    duaId == dua.id
-                                      ? "text-[#1FA45B] font-semibold"
-                                      : "cursor-pointer"
-                                  }`}
-                                  key={dua.id}
-                                  onClick={() =>
-                                    handleDuaClick(
-                                      singleSubCat,
-                                      category,
-                                      dua?.id
-                                    )
-                                  }
-                                >
-                                  <div className="flex items-center gap-2">
-                                    <IoIosArrowForward className="text-[#1FA45B] w-[24px] shrink-0" />
-                                    <span className="flex-1">
-                                      {dua.dua_name_en}
-                                    </span>
-                                  </div>
-                                </li>
-                              ))}
-                          </ul>
-                        )}
-                      </li>
-                    ))}
-                </ul>
+          ))
+        ) : (
+          <>
+            {categories?.map((category) => (
+              <div className="mb-4" key={category?.id}>
+                <div
+                  onClick={() => handleCategoryClick(category)}
+                  className="flex items-center gap-2 p-3 bg-[#F9F9F9] rounded-[10px] mb-2 cursor-pointer"
+                >
+                  <Image
+                    src="https://i.ibb.co/Km5k3WD/4b123749b99b0322305c72c5d565ddf3.png"
+                    alt=""
+                    width={50}
+                    height={50}
+                    className="p-2 rounded-lg bg-[#E8F0F5]"
+                  />
+
+                  <div>
+                    <h3
+                      className={`font-semibold text-base w-40 ${
+                        catId == category?.cat_id
+                          ? "text-[#1FA45B] font-semibold"
+                          : "cursor-pointer"
+                      }`}
+                    >
+                      {category.cat_name_en}
+                    </h3>
+                    <p className="text-sm font-normal text-[#7E7E7E]">
+                      Subcategory: {category.no_of_subcat}
+                    </p>
+                  </div>
+                  <div className="text-center text-gray-500">
+                    <p className="text-base font-semibold text-[#393939]">
+                      {category.no_of_dua}
+                    </p>
+                    <p className="text-sm font-normal text-[#7E7E7E]">Duas</p>
+                  </div>
+                </div>
+                {catId == category?.cat_id && (
+                  <div>
+                    <ul className="green-list">
+                      {console.log(subcategories)}
+                      {subcategories &&
+                        subcategories?.map((singleSubCat) => (
+                          <li
+                            className="text-[#373737] py-2 text-base green-dot cursor-pointer"
+                            key={singleSubCat?.id}
+                          >
+                            <div
+                              className={`flex items-center ${
+                                subCatId == singleSubCat?.subcat_id
+                                  ? "text-[#1FA45B] font-semibold"
+                                  : "cursor-pointer"
+                              }`}
+                              onClick={() =>
+                                handleSubCategoryClick(singleSubCat, category)
+                              }
+                            >
+                              {singleSubCat.subcat_name_en}
+                            </div>
+                            {subCatId == singleSubCat?.subcat_id && (
+                              <ul className="pt-2">
+                                {duaList &&
+                                  duaList?.map((dua) => (
+                                    <li
+                                      className={`cursor-pointer text-sm py-2 ${
+                                        duaId == dua.id
+                                          ? "text-[#1FA45B] font-semibold"
+                                          : "cursor-pointer"
+                                      }`}
+                                      key={dua.id}
+                                      onClick={() =>
+                                        handleDuaClick(
+                                          singleSubCat,
+                                          category,
+                                          dua?.id
+                                        )
+                                      }
+                                    >
+                                      <div className="flex items-center gap-2">
+                                        <IoIosArrowForward className="text-[#1FA45B] w-[24px] shrink-0" />
+                                        <span className="flex-1">
+                                          {dua.dua_name_en}
+                                        </span>
+                                      </div>
+                                    </li>
+                                  ))}
+                              </ul>
+                            )}
+                          </li>
+                        ))}
+                    </ul>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        ))}
+            ))}
+          </>
+        )}
       </div>
     </div>
   );
